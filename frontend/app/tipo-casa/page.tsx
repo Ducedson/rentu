@@ -51,9 +51,9 @@ function TipoCasaContent() {
       <section className="mx-auto max-w-[1380px] px-10 py-10">
         <div className="mb-8 max-w-3xl">
           <p className="text-sm font-black uppercase text-[#f0442b]">Tipo de casa</p>
-          <h1 className="mt-3 text-4xl font-black">Casas existentes no CgWebsite</h1>
+          <h1 className="mt-3 text-4xl font-black">Casas existentes no Website</h1>
           <p className="mt-4 text-lg font-semibold text-gray-600">
-            Veja casas, flats, escritorios e outros imoveis disponiveis. Clique em cada imovel para abrir a descricao completa.
+            Veja casas, flats, escritorios e outros imoveis disponiveis. Clique em cada imóvel para abrir a descrição completa.
           </p>
         </div>
 
@@ -95,8 +95,8 @@ function TipoCasaContent() {
         {!loading && properties.length === 0 ? (
           <div className="rounded border border-dashed p-10 text-center">
             <FiHome className="mx-auto mb-3 text-4xl text-[#f0442b]" />
-            <h2 className="text-xl font-black">Nenhum imovel encontrado</h2>
-            <p className="mt-2 font-semibold text-gray-600">Tente outro tipo ou limpe a pesquisa.</p>
+            <h2 className="text-xl font-black">Nenhum imóvel encontrado</h2>
+            <p className="mt-2 font-semibold text-gray-600">Tente outro tipo ou apague a pesquisa.</p>
           </div>
         ) : (
           <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
@@ -135,7 +135,7 @@ function TipoCasaLoading() {
     <main className="min-h-screen bg-white text-black">
       <RentuHeader />
       <section className="mx-auto max-w-[1380px] px-10 py-10">
-        <p className="rounded bg-[#f8f8f8] p-8 text-center font-bold">A carregar imoveis...</p>
+        <p className="rounded bg-[#f8f8f8] p-8 text-center font-bold">A carregar imóveis...</p>
       </section>
       <RentuFooter />
     </main>
