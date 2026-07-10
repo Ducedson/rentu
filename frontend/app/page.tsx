@@ -127,13 +127,13 @@ export default function Home() {
         <div className="mb-12 text-center">
           <h2 className="text-[48px] font-black">Casas Mais Recentes</h2>
           <p className="mt-5 text-[21px] font-extrabold text-[#6d6d6d]">
-            Imoveis publicados e prontos para visita no CgWebsite.
+            Imóveis publicados e prontos para visita no Website.
           </p>
         </div>
 
         {properties.length === 0 ? (
           <div className="rounded border border-dashed p-10 text-center font-bold text-gray-600">
-            Nenhum imovel publicado ainda.
+            Nenhum imóvel publicado ainda.
           </div>
         ) : (
           <div className="grid gap-x-7 gap-y-10 md:grid-cols-2 xl:grid-cols-3">
@@ -172,7 +172,7 @@ export default function Home() {
                       <span className="text-[16px] font-bold">{property.owner?.name || "Rentu"}</span>
                     </div>
                     <Link className="rounded bg-[#f0442b] px-5 py-3 text-[17px] font-extrabold text-white" href={`/imovel/${property.id}`}>
-                      Ver descricao
+                      Contactar
                     </Link>
                   </div>
                 </div>
@@ -192,7 +192,7 @@ export default function Home() {
         <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <div>
             <h2 className="text-[44px] font-black leading-tight">
-              A Sua Comodidade,<br />E A Nossa Satisfacao
+              A Sua Comodidade,<br />E A Nossa Satisfação
             </h2>
             <p className="mt-2 text-[18px] font-medium text-[#6d6d6d]">
               Descubra o melhor que a Rentu oferece.

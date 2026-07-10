@@ -96,11 +96,7 @@ export default function LoginPage() {
             {loading ? "Entrando..." : "Entrar"}
           </button>
 
-          <div className="mt-6 text-center text-xs text-gray-500 mb-4">
-            <p className="mb-2">Para testar, use:</p>
-            <p>Email: <strong>admin@rentu.com</strong></p>
-            <p>Senha: <strong>admin123</strong></p>
-          </div>
+         
 
           <div className="mt-6 flex justify-center gap-10 font-bold text-[#555]">
             <Link href="/criar-conta" className="hover:text-[#f0442b]">Criar Conta</Link>
