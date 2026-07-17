@@ -201,7 +201,7 @@ export default function CreateAccountPage() {
               <option value="OWNER">Proprietário (Vender/Alugar)</option>
               <option value="CLIENT">Cliente (Procurar Imóvel)</option>
               <option value="AGENT">Agente (Intermediário)</option>
-              <option value="ADMIN">Admin (Gestão)</option>
+              
             </select>
           </label>
 
