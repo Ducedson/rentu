@@ -10,6 +10,7 @@ import {
   deletePropertyImage,
   updatePropertyImage,
 } from "@/lib/admin";
+import { normalizeImageUrl } from "@/lib/properties-ui";
 import { ProtectedAdminRoute } from "@/components/protected-route";
 import { FiArrowLeft, FiTrash2, FiSave, FiPlus } from "react-icons/fi";
 
@@ -368,7 +369,7 @@ export default function AdminEditPropertyPage() {
                     type="url"
                     value={imageUrl}
                     onChange={(e) => setImageUrl(e.target.value)}
-                    placeholder="https://exemplo.com/imagem.jpg"
+                    placeholder="/assets/pasta/foto.jpg ou https://exemplo.com/imagem.jpg"
                     className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:border-[#f0442b]"
                   />
                 </div>
@@ -422,7 +423,7 @@ export default function AdminEditPropertyPage() {
                   >
                     <div className="relative w-full h-40 bg-gray-100">
                       <img
-                        src={image.url}
+                        src={normalizeImageUrl(image.url)}
                         alt={image.altText || `Imagem ${index + 1}`}
                         className="w-full h-full object-cover"
                       />

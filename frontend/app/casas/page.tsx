@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { FaBath, FaBed } from "react-icons/fa";
 import { RentuFooter, RentuHeader } from "../components/rentu-chrome";
 import { getProperties, Property } from "@/lib/api";
+import { getPropertyCover } from "@/lib/properties-ui";
 
 interface Metric {
   icon: React.ReactNode;
@@ -87,7 +88,7 @@ export default function PropertiesPage() {
         {!loading && properties.length > 0 && (
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {properties.map((property) => {
-              const coverImage = property.images.find(img => img.isCover)?.url || property.images[0]?.url || "/assets/a.jpg";
+              const coverImage = getPropertyCover(property);
               const formatPrice = (price: number) => {
                 return new Intl.NumberFormat("pt-MZ", {
                   style: "currency",
