@@ -105,19 +105,19 @@ export default function CreateAccountPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="min-h-screen overflow-x-hidden bg-white text-black">
       <RentuHeader />
       <section
-        className="mx-auto grid min-h-[620px] max-w-[1380px] items-center gap-10 bg-cover bg-center px-10 py-14 lg:grid-cols-[1fr_540px]"
+        className="mx-auto grid min-h-[calc(100vh-90px)] max-w-[1380px] items-center gap-8 bg-cover bg-center px-4 py-8 sm:px-6 sm:py-10 lg:grid-cols-[minmax(0,1fr)_minmax(420px,540px)] lg:gap-10 lg:px-10 lg:py-14"
         style={{
           backgroundImage:
-            "linear-gradient(90deg, rgba(255,255,255,.9), rgba(255,255,255,.66)), url(/assets/hero-living.jpg)",
+            "linear-gradient(90deg, rgba(255,255,255,.94), rgba(255,255,255,.76)), url(/assets/hero-living.jpg)",
         }}
       >
-        <div>
-          <p className="text-4xl font-black">Bem-Vindo a</p>
-          <p className="mt-2 text-6xl font-black text-[#f0442b]">Rentu!!</p>
-          <p className="mt-6 text-lg text-gray-600">
+        <div className="max-w-xl text-center sm:text-left">
+          <p className="text-3xl font-black leading-tight sm:text-4xl">Bem-Vindo a</p>
+          <p className="mt-2 text-5xl font-black leading-none text-[#f0442b] sm:text-6xl">Rentu!!</p>
+          <p className="mt-5 text-base leading-7 text-gray-600 sm:mt-6 sm:text-lg">
             Crie sua conta e comece a gerenciar imóveis ou encontrar o imóvel
             dos seus sonhos.
           </p>
@@ -125,15 +125,15 @@ export default function CreateAccountPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="rounded bg-white/95 p-8 shadow-[0_8px_28px_rgba(0,0,0,.18)]"
+          className="w-full rounded bg-white/95 p-5 shadow-[0_8px_28px_rgba(0,0,0,.18)] sm:p-8"
         >
-          <h1 className="mb-2 text-center text-3xl font-black">Criar Conta</h1>
-          <p className="text-center text-sm text-gray-500 mb-6">
+          <h1 className="mb-2 text-center text-2xl font-black sm:text-3xl">Criar Conta</h1>
+          <p className="mb-5 text-center text-sm text-gray-500 sm:mb-6">
             Junte-se à comunidade Rentu
           </p>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-50 border border-red-200 rounded text-red-700 text-sm">
+            <div className="mb-4 rounded border border-red-200 bg-red-50 p-3 text-sm text-red-700">
               {error}
             </div>
           )}
@@ -145,7 +145,7 @@ export default function CreateAccountPage() {
               name="name"
               value={formData.name}
               onChange={handleChange}
-              className="h-12 w-full rounded border px-4 outline-[#f0442b]"
+              className="h-12 w-full min-w-0 rounded border px-4 outline-[#f0442b]"
               placeholder="Seu nome completo"
               required
             />
@@ -158,7 +158,7 @@ export default function CreateAccountPage() {
               name="email"
               value={formData.email}
               onChange={handleChange}
-              className="h-12 w-full rounded border px-4 outline-[#f0442b]"
+              className="h-12 w-full min-w-0 rounded border px-4 outline-[#f0442b]"
               placeholder="seu@email.com"
               required
             />
@@ -171,7 +171,7 @@ export default function CreateAccountPage() {
               name="password"
               value={formData.password}
               onChange={handleChange}
-              className="h-12 w-full rounded border px-4 outline-[#f0442b]"
+              className="h-12 w-full min-w-0 rounded border px-4 outline-[#f0442b]"
               placeholder="Mínimo 6 caracteres"
               required
             />
@@ -184,7 +184,7 @@ export default function CreateAccountPage() {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleChange}
-              className="h-12 w-full rounded border px-4 outline-[#f0442b]"
+              className="h-12 w-full min-w-0 rounded border px-4 outline-[#f0442b]"
               placeholder="Confirme sua senha"
               required
             />
@@ -196,7 +196,7 @@ export default function CreateAccountPage() {
               name="role"
               value={formData.role}
               onChange={handleChange}
-              className="h-12 w-full rounded border px-4 outline-[#f0442b]"
+              className="h-12 w-full min-w-0 rounded border px-4 outline-[#f0442b]"
             >
               <option value="OWNER">Proprietário (Vender/Alugar)</option>
               <option value="CLIENT">Cliente (Procurar Imóvel)</option>
@@ -205,15 +205,15 @@ export default function CreateAccountPage() {
             </select>
           </label>
 
-          <label className="mb-6 flex items-center gap-3 font-bold">
-            <input type="checkbox" required />
-            Concordo com os Termos e Condições
+          <label className="mb-6 flex items-start gap-3 text-sm font-bold sm:items-center sm:text-base">
+            <input className="mt-1 sm:mt-0" type="checkbox" required />
+            <span>Concordo com os Termos e Condições</span>
           </label>
 
           <button
             type="submit"
             disabled={loading}
-            className="w-full h-12 rounded bg-[#f0442b] hover:bg-[#d63220] text-lg font-black text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-12 w-full rounded bg-[#f0442b] text-base font-black text-white transition-colors hover:bg-[#d63220] disabled:cursor-not-allowed disabled:opacity-50 sm:text-lg"
           >
             {loading ? "Criando conta..." : "Criar Conta"}
           </button>

@@ -37,37 +37,37 @@ export default function Home() {
     <main className="min-h-screen bg-white text-[#111111]">
       <RentuHeader />
 
-      <section className="mx-auto max-w-[1380px] px-10 pt-6">
+      <section className="mx-auto max-w-[1380px] px-4 pt-4 sm:px-6 lg:px-10 lg:pt-6">
         <div
-          className="relative flex min-h-[565px] items-center justify-center overflow-hidden bg-cover bg-center text-white"
+          className="relative flex min-h-[520px] items-center justify-center overflow-hidden bg-cover bg-center text-white sm:min-h-[565px]"
           style={{
             backgroundImage:
               "linear-gradient(rgba(0,0,0,.42), rgba(0,0,0,.42)), url(/assets/kuvu.jpg)",
           }}
         >
-          <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center px-6 text-center">
-            <h1 className="text-[46px] font-black leading-tight md:text-[52px]">
+          <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center px-4 text-center sm:px-6">
+            <h1 className="text-4xl font-black leading-tight sm:text-[46px] md:text-[52px]">
               Procurando Imovel Para Arrendar?
             </h1>
-            <p className="mt-6 max-w-[980px] text-[25px] font-extrabold leading-snug">
+            <p className="mt-5 max-w-[980px] text-lg font-extrabold leading-snug sm:mt-6 sm:text-[25px]">
               A Rentu disponibiliza casas, flats e escritorios confortaveis para habitacao provisoria e empreendimento.
             </p>
 
             <form
-              className="mt-12 flex w-full max-w-[820px] items-center rounded bg-white p-3 shadow-2xl"
+              className="mt-8 grid w-full max-w-[820px] gap-3 rounded bg-white p-3 shadow-2xl sm:mt-12 sm:flex sm:items-center"
               onSubmit={(event) => {
                 event.preventDefault();
                 runSearch();
               }}
             >
               <input
-                className="h-12 flex-1 px-4 text-[18px] font-medium text-[#555] outline-none"
+                className="h-12 min-w-0 flex-1 rounded border border-gray-100 px-3 text-base font-medium text-[#555] outline-none sm:border-0 sm:px-4 sm:text-[18px]"
                 onChange={(event) => setQuery(event.target.value)}
                 placeholder="Pesquise por cidade, bairro ou tipo de imovel..."
                 value={query}
               />
               <button
-                className="mr-4 grid size-12 place-items-center rounded bg-[#fee2dd] text-[#f0442b]"
+                className="grid size-12 place-items-center rounded bg-[#fee2dd] text-[#f0442b] sm:mr-4"
                 type="button"
                 aria-label="Filtros"
                 aria-expanded={advancedOpen}
@@ -75,7 +75,7 @@ export default function Home() {
               >
                 <FiSliders className="text-2xl" aria-hidden />
               </button>
-              <button className="flex h-12 items-center gap-3 rounded bg-[#f0442b] px-5 text-[18px] font-extrabold text-white" type="submit">
+              <button className="flex h-12 items-center justify-center gap-3 rounded bg-[#f0442b] px-5 text-base font-extrabold text-white sm:text-[18px]" type="submit">
                 Pesquisar <FiSearch className="text-xl" aria-hidden />
               </button>
             </form>
@@ -123,10 +123,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1380px] px-10 py-16">
+      <section className="mx-auto max-w-[1380px] px-4 py-12 sm:px-6 lg:px-10 lg:py-16">
         <div className="mb-12 text-center">
-          <h2 className="text-[48px] font-black">Casas Mais Recentes</h2>
-          <p className="mt-5 text-[21px] font-extrabold text-[#6d6d6d]">
+          <h2 className="text-3xl font-black sm:text-[48px]">Casas Mais Recentes</h2>
+          <p className="mt-4 text-base font-extrabold text-[#6d6d6d] sm:mt-5 sm:text-[21px]">
             Imóveis publicados e prontos para visita no Website.
           </p>
         </div>
@@ -139,7 +139,7 @@ export default function Home() {
           <div className="grid gap-x-7 gap-y-10 md:grid-cols-2 xl:grid-cols-3">
             {properties.map((property) => (
               <article className="overflow-hidden bg-white shadow-[0_2px_5px_rgba(0,0,0,0.25)]" key={property.id}>
-                <div className="relative h-[320px] bg-cover bg-center" style={{ backgroundImage: `url(${getPropertyCover(property)})` }}>
+                <div className="relative h-64 bg-cover bg-center sm:h-[320px]" style={{ backgroundImage: `url(${getPropertyCover(property)})` }}>
                   <span className="absolute left-4 top-5 rounded bg-[#f0442b] px-4 py-2 text-[15px] font-bold text-white">
                     Disponivel
                   </span>
@@ -161,12 +161,12 @@ export default function Home() {
                   <p className="mt-4 text-[18px] font-bold text-[#7a7a7a]">
                     {property.city}{property.district ? `, ${property.district}` : ""}
                   </p>
-                  <div className="mt-7 flex items-center gap-5">
+                  <div className="mt-7 flex flex-wrap items-center gap-4 sm:gap-5">
                     <span className="flex items-center gap-2 font-black"><FaBed /> {property.bedrooms || 0} Quartos</span>
                     <span className="h-8 w-px bg-[#a9a9a9]" />
                     <span className="flex items-center gap-2 font-black"><FaBath /> {property.bathrooms || 0} Banhos</span>
                   </div>
-                  <div className="mt-8 flex items-center justify-between">
+                  <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-3 text-[#777]">
                       <FiUser className="text-2xl text-black" aria-hidden />
                       <span className="text-[16px] font-bold">{property.owner?.name || "Rentu"}</span>
@@ -188,10 +188,10 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="mx-auto max-w-[1380px] px-10 py-16">
+      <section className="mx-auto max-w-[1380px] px-4 py-12 sm:px-6 lg:px-10 lg:py-16">
         <div className="mb-12 flex flex-col justify-between gap-6 sm:flex-row sm:items-end">
           <div>
-            <h2 className="text-[44px] font-black leading-tight">
+            <h2 className="text-3xl font-black leading-tight sm:text-[44px]">
               A Sua Comodidade,<br />E A Nossa Satisfação
             </h2>
             <p className="mt-2 text-[18px] font-medium text-[#6d6d6d]">
@@ -208,7 +208,7 @@ export default function Home() {
               } ${index === 2 ? "xl:mt-48" : ""}`}
               key={`comodidade-${property.id}`}
             >
-              <div className="relative h-[310px] bg-cover bg-center" style={{ backgroundImage: `url(${getPropertyCover(property)})` }}>
+              <div className="relative h-64 bg-cover bg-center sm:h-[310px]" style={{ backgroundImage: `url(${getPropertyCover(property)})` }}>
                 <span className="absolute left-4 top-4 rounded bg-[#f0442b] px-3 py-1 text-[14px] font-bold uppercase tracking-wider text-white">
                   Disponivel
                 </span>
@@ -241,7 +241,7 @@ export default function Home() {
                     </span>
                   </div>
                 </div>
-                <div className="mt-5 flex items-center justify-between">
+                <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-2 text-[15px] font-bold text-[#444]">
                     <FiUser className="text-lg text-gray-400" />
                     <span>{property.owner?.name || "Rentu"}</span>

@@ -12,14 +12,15 @@ import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 export function RentuHeader({ help = false }: { help?: boolean }) {
   return (
     <header className="sticky top-0 z-20 bg-white shadow-[0_1px_0_rgba(0,0,0,0.06)]">
-      <div className="mx-auto flex h-[90px] max-w-[1380px] items-center justify-between px-10">
-        <Link className="flex items-center gap-2" href="/">
+      <div className="mx-auto flex min-h-[76px] max-w-[1380px] items-center justify-between gap-3 px-4 py-3 sm:px-6 lg:h-[90px] lg:px-10 lg:py-0">
+        <Link className="flex min-w-0 items-center gap-2" href="/">
           <Image
             alt="Rentu"
             height={58}
             priority
             src="/assets/rentu-logo.svg"
             width={190}
+            className="h-auto w-[132px] sm:w-[160px] lg:w-[190px]"
           />
         </Link>
 
@@ -38,7 +39,7 @@ export function RentuHeader({ help = false }: { help?: boolean }) {
           </Link>
         </nav>
 
-        <div className="flex items-center gap-4">
+        <div className="flex min-w-0 items-center gap-2 sm:gap-4">
           {help ? (
             <Link className="text-[18px] font-extrabold" href="/contacto">
               Ajude-me
@@ -54,13 +55,13 @@ export function RentuHeader({ help = false }: { help?: boolean }) {
               </a>
               <Link
                 aria-label="Entrar"
-                className="grid size-11 place-items-center rounded-full border-2 border-black bg-white"
+                className="grid size-10 shrink-0 place-items-center rounded-full border-2 border-black bg-white sm:size-11"
                 href="/login"
               >
                 <FiUser className="text-xl" aria-hidden />
               </Link>
               <Link
-                className="grid h-12 place-items-center rounded bg-[#f0442b] px-5 text-[17px] font-extrabold text-white"
+                className="grid h-10 shrink-0 place-items-center rounded bg-[#f0442b] px-3 text-center text-sm font-extrabold leading-tight text-white sm:h-12 sm:px-5 sm:text-[17px]"
                 href="/adicionar-casa"
               >
                 Adicionar Casa

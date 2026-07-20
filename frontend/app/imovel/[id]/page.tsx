@@ -7,6 +7,7 @@ import { FaBath, FaBed } from "react-icons/fa";
 import { FiChevronLeft, FiChevronRight, FiUser, FiX } from "react-icons/fi";
 import { RentuFooter, RentuHeader } from "../../components/rentu-chrome";
 import { getProperty, Property } from "@/lib/api";
+import { normalizeImageUrl } from "@/lib/properties-ui";
 
 interface Metric {
   icon: React.ReactNode;
@@ -100,8 +101,8 @@ export default function PropertyDetailPage() {
     );
   }
 
-  const photos = property.images.length > 0 
-    ? property.images.map(img => img.url)
+  const photos = property.images.length > 0
+    ? property.images.map((img) => normalizeImageUrl(img.url))
     : ["/assets/a.jpg"]; // fallback image
 
   const formatPrice = (price: number) => {
@@ -112,27 +113,27 @@ export default function PropertyDetailPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="min-h-screen overflow-x-hidden bg-white text-black">
       <RentuHeader />
-      <section className="mx-auto max-w-[1380px] px-10 py-8">
+      <section className="mx-auto max-w-[1380px] px-4 py-6 sm:px-6 lg:px-10 lg:py-8">
         <button
-          className="relative mb-8 h-[520px] w-full overflow-hidden bg-cover bg-center text-left"
+          className="relative mb-8 h-72 w-full overflow-hidden bg-cover bg-center text-left sm:h-[420px] lg:h-[520px]"
           onClick={() => setGalleryOpen(true)}
           style={{ backgroundImage: `url(${photos[0]})` }}
           type="button"
         >
-          <span className="absolute right-8 top-8 rounded bg-black/65 px-5 py-3 text-xl font-black text-white">
+          <span className="absolute right-4 top-4 rounded bg-black/65 px-4 py-2 text-base font-black text-white sm:right-8 sm:top-8 sm:px-5 sm:py-3 sm:text-xl">
             {photos.length} Foto{photos.length !== 1 ? "s" : ""}
           </span>
         </button>
 
-        <div className="grid gap-12 lg:grid-cols-[1fr_360px]">
+        <div className="grid gap-8 lg:grid-cols-[minmax(0,1fr)_360px] lg:gap-12">
           <section>
             <h1 className="mb-8 text-3xl font-black">
               Preço: {formatPrice(property.price)}
             </h1>
             
-            <div className="mb-10 flex gap-10">
+            <div className="mb-10 flex flex-wrap gap-8 sm:gap-10">
               {property.bedrooms && (
                 <MetricComponent 
                   icon={<FaBed />} 
@@ -150,7 +151,7 @@ export default function PropertyDetailPage() {
             </div>
 
             <h2 className="mb-6 text-2xl font-black">Informações do Imóvel</h2>
-            <dl className="grid max-w-xl grid-cols-2 gap-y-5 text-lg">
+            <dl className="grid max-w-xl grid-cols-1 gap-y-3 text-base sm:grid-cols-2 sm:gap-y-5 sm:text-lg">
               <dt className="font-black">Tipo</dt>
               <dd className="capitalize">{property.type.toLowerCase()}</dd>
               
@@ -206,7 +207,7 @@ export default function PropertyDetailPage() {
             )}
           </section>
 
-          <aside className="h-fit rounded border p-6 shadow-sm">
+          <aside className="h-fit rounded border p-5 shadow-sm sm:p-6">
             <div className="mb-6 flex items-center gap-3">
               <span className="grid size-12 place-items-center rounded-full bg-[#f4f4f4]">
                 <FiUser className="text-2xl" />
@@ -240,17 +241,17 @@ export default function PropertyDetailPage() {
       {galleryOpen ? (
         <div className="fixed inset-0 z-50 bg-black text-white">
           <button
-            className="absolute right-10 top-8 flex items-center gap-2 text-xl font-black"
+            className="absolute right-4 top-5 flex items-center gap-2 text-base font-black sm:right-10 sm:top-8 sm:text-xl"
             onClick={() => setGalleryOpen(false)}
             type="button"
           >
             <FiX /> Fechar
           </button>
-          <p className="absolute left-10 top-8 text-2xl font-black">
+          <p className="absolute left-4 top-5 text-xl font-black sm:left-10 sm:top-8 sm:text-2xl">
             {photoIndex + 1}/{photos.length}
           </p>
           <button
-            className="absolute left-8 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/20 hover:bg-white/30"
+            className="absolute left-3 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/20 hover:bg-white/30 sm:left-8 sm:size-12"
             onClick={() => setPhotoIndex((value) => Math.max(0, value - 1))}
             type="button"
             aria-label="Foto anterior"
@@ -262,7 +263,7 @@ export default function PropertyDetailPage() {
             style={{ backgroundImage: `url(${photos[photoIndex]})` }}
           />
           <button
-            className="absolute right-8 top-1/2 grid size-12 -translate-y-1/2 place-items-center rounded-full bg-white/20 hover:bg-white/30"
+            className="absolute right-3 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/20 hover:bg-white/30 sm:right-8 sm:size-12"
             onClick={() =>
               setPhotoIndex((value) => Math.min(photos.length - 1, value + 1))
             }

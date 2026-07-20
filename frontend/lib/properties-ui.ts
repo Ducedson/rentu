@@ -34,8 +34,33 @@ export function getPropertyTypeLabel(type: string) {
   return PROPERTY_TYPE_LABELS[type] || type;
 }
 
+export function normalizeImageUrl(url?: string) {
+  if (!url) return "";
+
+  const normalized = url.replace(/\\/g, "/");
+  const assetsIndex = normalized.indexOf("/assets/");
+
+  if (assetsIndex >= 0) {
+    return normalized.slice(assetsIndex).split("/").map((part, index) => {
+      if (index === 0 || !part) return part;
+
+      try {
+        return encodeURIComponent(decodeURIComponent(part));
+      } catch {
+        return encodeURIComponent(part);
+      }
+    }).join("/");
+  }
+
+  return normalized;
+}
+
 export function getPropertyCover(property: Property) {
-  return property.images.find((image) => image.isCover)?.url || property.images[0]?.url || "/assets/a.jpg";
+  return (
+    normalizeImageUrl(property.images.find((image) => image.isCover)?.url) ||
+    normalizeImageUrl(property.images[0]?.url) ||
+    "/assets/a.jpg"
+  );
 }
 
 export function formatPropertyPrice(property: Pick<Property, "price" | "currency">) {
