@@ -36,6 +36,7 @@ export function getPropertyTypeLabel(type: string) {
 
 export function normalizeImageUrl(url?: string) {
   if (!url) return "";
+
   const normalized = encodeURI(url.trim().replace(/\\/g, "/"));
 
   if (
@@ -47,17 +48,17 @@ export function normalizeImageUrl(url?: string) {
     return normalized;
   }
 
-  if (normalized.startsWith("/assets/") || normalized.startsWith("assets/")) {
-    return normalized.startsWith("/") ? normalized : `/${normalized}`;
-  }
-
   const api = (
     process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
     "https://api.rentu.co.mz/api"
   ).replace(/\/api$/, "");
 
-  if (normalized.startsWith("/")) {
+  if (normalized.startsWith("/assets/")) {
     return `${api}${normalized}`;
+  }
+
+  if (normalized.startsWith("assets/")) {
+    return `${api}/${normalized}`;
   }
 
   return `${api}/${normalized}`;
