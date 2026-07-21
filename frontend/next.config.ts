@@ -4,10 +4,12 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
 
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: "https",
         hostname: "api.rentu.co.mz",
+        pathname: "/assets/**",
       },
     ],
   },

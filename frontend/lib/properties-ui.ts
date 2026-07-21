@@ -35,38 +35,20 @@ export function getPropertyTypeLabel(type: string) {
 }
 
 export function normalizeImageUrl(url?: string) {
-  if (!url) return "";
+  if (!url) return "/assets/a.jpg";
 
-  const normalized = encodeURI(url.trim().replace(/\\/g, "/"));
-
-  if (
-    normalized.startsWith("http://") ||
-    normalized.startsWith("https://") ||
-    normalized.startsWith("data:") ||
-    normalized.startsWith("blob:")
-  ) {
-    return normalized;
+  if (url.startsWith("http")) {
+    return url;
   }
 
-  const api = (
-    process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
-    "https://api.rentu.co.mz/api"
-  ).replace(/\/api$/, "");
-
-  if (normalized.startsWith("/assets/")) {
-    return `${api}${normalized}`;
-  }
-
-  if (normalized.startsWith("assets/")) {
-    return `${api}/${normalized}`;
-  }
-
-  return `${api}/${normalized}`;
+  return `https://api.rentu.co.mz${url}`;
 }
-
+ 
 export function getPropertyCover(property: Property) {
   return (
-    normalizeImageUrl(property.images.find((image) => image.isCover)?.url) ||
+    normalizeImageUrl(
+      property.images.find((image) => image.isCover)?.url
+    ) ||
     normalizeImageUrl(property.images[0]?.url) ||
     "/assets/a.jpg"
   );

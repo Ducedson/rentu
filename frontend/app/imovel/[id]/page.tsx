@@ -8,7 +8,6 @@ import { FiChevronLeft, FiChevronRight, FiUser, FiX } from "react-icons/fi";
 import { RentuFooter, RentuHeader } from "../../components/rentu-chrome";
 import { getProperty, Property } from "@/lib/api";
 import { normalizeImageUrl } from "@/lib/properties-ui";
-
 interface Metric {
   icon: React.ReactNode;
   value: string;
