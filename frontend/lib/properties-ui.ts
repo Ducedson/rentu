@@ -37,11 +37,22 @@ export function getPropertyTypeLabel(type: string) {
 export function normalizeImageUrl(url?: string) {
   if (!url) return "";
 
+  if (url.startsWith("http://") || url.startsWith("https://")) {
+    return url;
+  }
+
+  const apiUrl =
+    process.env.NEXT_PUBLIC_API_URL || "https://api.rentu.co.mz";
+
   const normalized = url.replace(/\\/g, "/");
   const assetsIndex = normalized.indexOf("/assets/");
 
-  if (assetsIndex >= 0) {
-    return normalized.slice(assetsIndex).split("/").map((part, index) => {
+  let imagePath =
+    assetsIndex >= 0 ? normalized.slice(assetsIndex) : normalized;
+
+  imagePath = imagePath
+    .split("/")
+    .map((part, index) => {
       if (index === 0 || !part) return part;
 
       try {
@@ -49,10 +60,10 @@ export function normalizeImageUrl(url?: string) {
       } catch {
         return encodeURIComponent(part);
       }
-    }).join("/");
-  }
+    })
+    .join("/");
 
-  return normalized;
+  return `${apiUrl}${imagePath}`;
 }
 
 export function getPropertyCover(property: Property) {
