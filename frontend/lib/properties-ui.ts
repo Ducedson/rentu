@@ -36,34 +36,21 @@ export function getPropertyTypeLabel(type: string) {
 
 export function normalizeImageUrl(url?: string) {
   if (!url) return "";
+  const normalized = url.replace(/\\/g, "/");
 
-  if (url.startsWith("http://") || url.startsWith("https://")) {
-    return url;
+    if (normalized.startsWith("http://") || normalized.startsWith("https://")) {
+    return normalized;
   }
 
-  const apiUrl =
-    process.env.NEXT_PUBLIC_API_URL || "https://api.rentu.co.mz";
+  const api =
+    process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
+    "https://api.rentu.co.mz";
 
-  const normalized = url.replace(/\\/g, "/");
-  const assetsIndex = normalized.indexOf("/assets/");
+   if (normalized.startsWith("/")) {
+    return `${api}${normalized}`;
+  }
 
-  let imagePath =
-    assetsIndex >= 0 ? normalized.slice(assetsIndex) : normalized;
-
-  imagePath = imagePath
-    .split("/")
-    .map((part, index) => {
-      if (index === 0 || !part) return part;
-
-      try {
-        return encodeURIComponent(decodeURIComponent(part));
-      } catch {
-        return encodeURIComponent(part);
-      }
-    })
-    .join("/");
-
-  return `${apiUrl}${imagePath}`;
+  return `${api}/${normalized}`;
 }
 
 export function getPropertyCover(property: Property) {
