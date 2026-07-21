@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
-import { getProperty, Property } from "@/lib/api";
+import { useParams } from "next/navigation";
+import { useState, useEffect, useCallback } from "react";
+import { getApiErrorMessage, getProperty, Property } from "@/lib/api";
 import {
   updateProperty,
   addPropertyImage,
@@ -17,7 +17,6 @@ import { FiArrowLeft, FiTrash2, FiSave, FiPlus } from "react-icons/fi";
 export default function AdminEditPropertyPage() {
   const params = useParams();
   const propertyId = params.id as string;
-  const router = useRouter();
 
   const [property, setProperty] = useState<Property | null>(null);
   const [loading, setLoading] = useState(true);
@@ -44,11 +43,7 @@ export default function AdminEditPropertyPage() {
   const [isCover, setIsCover] = useState(false);
   const [addingImage, setAddingImage] = useState(false);
 
-  useEffect(() => {
-    fetchProperty();
-  }, [propertyId]);
-
-  const fetchProperty = async () => {
+  const fetchProperty = useCallback(async () => {
     try {
       setLoading(true);
       const data = await getProperty(propertyId);
@@ -65,12 +60,17 @@ export default function AdminEditPropertyPage() {
         status: data.status,
       });
       setError("");
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Erro ao carregar propriedade");
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, "Erro ao carregar propriedade"));
     } finally {
       setLoading(false);
     }
-  };
+  }, [propertyId]);
+
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    fetchProperty();
+  }, [fetchProperty]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -91,8 +91,8 @@ export default function AdminEditPropertyPage() {
       await updateProperty(propertyId, formData);
       setSuccess("Propriedade atualizada com sucesso!");
       setTimeout(() => setSuccess(""), 3000);
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Erro ao salvar propriedade");
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, "Erro ao salvar propriedade"));
     } finally {
       setSaving(false);
     }
@@ -127,8 +127,8 @@ export default function AdminEditPropertyPage() {
       setIsCover(false);
       setSuccess("Imagem adicionada com sucesso!");
       setTimeout(() => setSuccess(""), 3000);
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Erro ao adicionar imagem");
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, "Erro ao adicionar imagem"));
     } finally {
       setAddingImage(false);
     }
@@ -147,8 +147,8 @@ export default function AdminEditPropertyPage() {
         });
         setSuccess("Imagem deletada com sucesso!");
         setTimeout(() => setSuccess(""), 3000);
-      } catch (err: any) {
-        setError(err.response?.data?.message || "Erro ao deletar imagem");
+      } catch (err: unknown) {
+        setError(getApiErrorMessage(err, "Erro ao deletar imagem"));
       }
     }
   };
@@ -177,8 +177,8 @@ export default function AdminEditPropertyPage() {
       });
       setSuccess("Imagem de capa atualizada!");
       setTimeout(() => setSuccess(""), 3000);
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Erro ao atualizar imagem de capa");
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, "Erro ao atualizar imagem de capa"));
     }
   };
 

@@ -7,6 +7,7 @@ import { RentuHeader } from "../components/rentu-chrome";
 import { loginAdmin } from "@/lib/admin";
 import { useAuth } from "@/lib/auth-context";
 import { getDashboardPath } from "@/lib/properties-ui";
+import { getApiErrorMessage } from "@/lib/api";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -26,8 +27,8 @@ export default function LoginPage() {
       
       login(response.user, response.access_token);
       router.push(getDashboardPath(response.user.role));
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Email ou senha incorretos");
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, "Email ou senha incorretos"));
     } finally {
       setLoading(false);
     }

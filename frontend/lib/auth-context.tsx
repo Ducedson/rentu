@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useState } from "react";
 import { getAdminToken, setAdminToken, clearAdminToken } from "./admin";
 
 interface User {
@@ -20,28 +20,31 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+function getStoredUser() {
+  if (typeof window === "undefined") {
+    return null;
+  }
 
-  useEffect(() => {
-    // Verificar se há token salvo
-    const token = getAdminToken();
-    if (token) {
-      setAdminToken(token);
-      // Aqui você poderia validar o token com o backend
-      // Por enquanto, assumimos que é válido
-      try {
-        const userStr = localStorage.getItem("admin_user");
-        if (userStr) {
-          setUser(JSON.parse(userStr));
-        }
-      } catch (error) {
-        clearAdminToken();
-      }
-    }
-    setIsLoading(false);
-  }, []);
+  const token = getAdminToken();
+  if (!token) {
+    return null;
+  }
+
+  setAdminToken(token);
+
+  try {
+    const userStr = localStorage.getItem("admin_user");
+    return userStr ? (JSON.parse(userStr) as User) : null;
+  } catch {
+    clearAdminToken();
+    localStorage.removeItem("admin_user");
+    return null;
+  }
+}
+
+export function AuthProvider({ children }: { children: React.ReactNode }) {
+  const [user, setUser] = useState<User | null>(() => getStoredUser());
+  const isLoading = false;
 
   const login = (userData: User, token: string) => {
     setAdminToken(token);

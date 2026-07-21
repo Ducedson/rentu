@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { createProperty } from "@/lib/admin";
+import { getApiErrorMessage } from "@/lib/api";
 import { ProtectedAdminRoute } from "@/components/protected-route";
 import { FiArrowLeft, FiSave } from "react-icons/fi";
 
@@ -35,7 +36,7 @@ export default function AdminCreatePropertyPage() {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    let finalValue: any = value;
+    let finalValue: string | number = value;
 
     if (
       [
@@ -87,8 +88,8 @@ export default function AdminCreatePropertyPage() {
       setSaving(true);
       const newProperty = await createProperty(formData);
       router.push(`/admin/properties/${newProperty.id}`);
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Erro ao criar propriedade");
+    } catch (err: unknown) {
+      setError(getApiErrorMessage(err, "Erro ao criar propriedade"));
     } finally {
       setSaving(false);
     }

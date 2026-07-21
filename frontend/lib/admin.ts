@@ -30,7 +30,7 @@ export interface CreatePropertyPayload {
   status?: string;
 }
 
-export interface UpdatePropertyPayload extends Partial<CreatePropertyPayload> {}
+export type UpdatePropertyPayload = Partial<CreatePropertyPayload>;
 
 export async function loginAdmin(email: string, password: string): Promise<AdminLoginResponse> {
   return loginUser(email, password);

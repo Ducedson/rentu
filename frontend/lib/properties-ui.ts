@@ -36,17 +36,27 @@ export function getPropertyTypeLabel(type: string) {
 
 export function normalizeImageUrl(url?: string) {
   if (!url) return "";
-  const normalized = url.replace(/\\/g, "/");
+  const normalized = encodeURI(url.trim().replace(/\\/g, "/"));
 
-    if (normalized.startsWith("http://") || normalized.startsWith("https://")) {
+  if (
+    normalized.startsWith("http://") ||
+    normalized.startsWith("https://") ||
+    normalized.startsWith("data:") ||
+    normalized.startsWith("blob:")
+  ) {
     return normalized;
   }
 
-  const api =
-    process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
-    "https://api.rentu.co.mz";
+  if (normalized.startsWith("/assets/") || normalized.startsWith("assets/")) {
+    return normalized.startsWith("/") ? normalized : `/${normalized}`;
+  }
 
-   if (normalized.startsWith("/")) {
+  const api = (
+    process.env.NEXT_PUBLIC_API_URL?.replace(/\/$/, "") ||
+    "https://api.rentu.co.mz/api"
+  ).replace(/\/api$/, "");
+
+  if (normalized.startsWith("/")) {
     return `${api}${normalized}`;
   }
 

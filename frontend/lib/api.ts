@@ -2,13 +2,30 @@ import axios from 'axios';
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ||
-  (process.env.NODE_ENV === 'development' ? 'http://localhost:3001/api' : undefined);
+  (process.env.NODE_ENV === 'development'
+    ? 'http://localhost:3001/api'
+    : 'https://api.rentu.co.mz/api');
 
 export const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
     'Content-Type': 'application/json',
   },
+});
+
+api.interceptors.request.use((config) => {
+  if (typeof window === 'undefined') {
+    return config;
+  }
+
+  const token = localStorage.getItem('admin_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  } else {
+    delete config.headers.Authorization;
+  }
+
+  return config;
 });
 
 export interface AuthUser {
@@ -121,4 +138,17 @@ export async function registerUser(data: RegisterUserPayload): Promise<AuthRespo
     access_token: response.data.accessToken,
     user: response.data.user,
   };
+}
+
+export function getApiErrorMessage(error: unknown, fallback: string) {
+  if (!axios.isAxiosError(error)) {
+    return fallback;
+  }
+
+  const message = error.response?.data?.message;
+  if (Array.isArray(message)) {
+    return message.join(', ');
+  }
+
+  return typeof message === 'string' ? message : fallback;
 }

@@ -96,7 +96,7 @@ export default function SobreNos() {
               Sobre Nós
             </h1>
             <p className="mt-6 max-w-[800px] bg-[#f0442b] px-6 py-3 text-[20px] md:text-[24px] font-black italic tracking-wide rounded shadow-lg">
-              "A Rentu é o teu lar provisório ao preço do teu bolso."
+              &quot;A Rentu é o teu lar provisório ao preço do teu bolso.&quot;
             </p>
           </div>
         </div>
@@ -246,7 +246,7 @@ export default function SobreNos() {
       </section>
 <div className="mt-12 bg-white border-2 border-dashed border-[#f0442b] p-8 text-center max-w-[900px] mx-auto rounded">
             <p className="text-[20px] font-black text-[#111111] leading-snug">
-              "Em suma, transformamos um processo tradicionalmente fragmentado e complexo numa experiência digital simples, eficiente e focada nas reais necessidades do mercado moçambicano."
+              &quot;Em suma, transformamos um processo tradicionalmente fragmentado e complexo numa experiência digital simples, eficiente e focada nas reais necessidades do mercado moçambicano.&quot;
             </p>
             <p className="mt-4 text-[18px] font-extrabold text-[#f0442b]">
               Na Rentu, não prestamos serviços de arrendamento de casas, simplificamos a maneira de encontrá-las.
