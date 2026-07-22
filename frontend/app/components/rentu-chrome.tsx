@@ -29,10 +29,10 @@ export function RentuHeader({ help = false }: { help?: boolean }) {
             Inicio
           </Link>
           <Link className="flex items-center gap-2" href="/tipo-casa">
-            Tipo de casa
+            Tipo de Casa
           </Link>
           <Link className="flex items-center gap-2" href="/sobre-nos">
-            Sobre nos
+            Sobre Nós
           </Link>
           <Link className="flex items-center gap-2" href="/contacto">
             Contacto
