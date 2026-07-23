@@ -88,6 +88,17 @@ export async function addPropertyImage(
   return response.data;
 }
 
+export async function uploadPropertyImage(propertyId: string, image: File) {
+  const payload = new FormData();
+  payload.append("image", image);
+
+  const response = await api.post(`/properties/${propertyId}/images/upload`, payload, {
+    headers: { "Content-Type": "multipart/form-data" },
+  });
+
+  return response.data;
+}
+
 export async function updatePropertyImage(
   propertyId: string,
   imageId: string,

@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FiCheckCircle, FiImage, FiUploadCloud } from "react-icons/fi";
 import { RentuFooter, RentuHeader } from "../components/rentu-chrome";
-import { addPropertyImage, createProperty } from "@/lib/admin";
+import { createProperty, uploadPropertyImage } from "@/lib/admin";
 import { useAuth } from "@/lib/auth-context";
 import { ProtectedAgentRoute } from "@/components/protected-route";
 
@@ -68,6 +68,8 @@ export default function AddHomePage() {
   const [step, setStep] = useState(0);
   const [done, setDone] = useState(false);
   const [formData, setFormData] = useState(initialForm);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const { isAuthenticated, isLoading } = useAuth();
@@ -78,6 +80,30 @@ export default function AddHomePage() {
   ) => {
     const { name, value } = event.target;
     setFormData((current) => ({ ...current, [name]: value }));
+    setError("");
+  };
+
+  const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0] || null;
+
+    if (!file) {
+      setImageFile(null);
+      setImagePreview("");
+      return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+      setError("Escolha um ficheiro de imagem valido.");
+      return;
+    }
+
+    if (file.size > 8 * 1024 * 1024) {
+      setError("A imagem deve ter no maximo 8MB.");
+      return;
+    }
+
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
     setError("");
   };
 
@@ -145,17 +171,14 @@ export default function AddHomePage() {
         district: formData.district,
       });
 
-      if (formData.imageUrl) {
-        await addPropertyImage(property.id, {
-          url: formData.imageUrl,
-          altText: formData.title,
-          isCover: true,
-          sortOrder: 0,
-        });
+      if (imageFile) {
+        await uploadPropertyImage(property.id, imageFile);
       }
 
       setDone(true);
       setFormData(initialForm);
+      setImageFile(null);
+      setImagePreview("");
     } catch (err) {
       setError(
         getApiErrorMessage(
@@ -246,7 +269,12 @@ export default function AddHomePage() {
               <DescriptionStep formData={formData} onChange={handleChange} />
             ) : null}
             {step === 1 ? (
-              <LocationStep formData={formData} onChange={handleChange} />
+              <LocationStep
+                formData={formData}
+                imagePreview={imagePreview}
+                onChange={handleChange}
+                onImageChange={handleImageChange}
+              />
             ) : null}
             {step === 2 ? <ContactStep formData={formData} onChange={handleChange} /> : null}
 
@@ -359,10 +387,14 @@ function DescriptionStep({
 
 function LocationStep({
   formData,
+  imagePreview,
   onChange,
+  onImageChange,
 }: {
   formData: typeof initialForm;
+  imagePreview: string;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>;
+  onImageChange: React.ChangeEventHandler<HTMLInputElement>;
 }) {
   return (
     <div className="space-y-7">
@@ -393,23 +425,31 @@ function LocationStep({
         value={formData.address}
       />
       <div>
-        <p className="mb-2 font-black">Foto do imóvel (URL opcional)</p>
-        <div className="grid min-h-44 place-items-center rounded border-2 border-dashed border-[#bbb] bg-[#fafafa] text-center">
-          <div>
-            <FiUploadCloud className="mx-auto mb-3 text-5xl text-[#f0442b]" />
-            <p className="font-black">Adicione uma imagem por URL</p>
-            <input
-              className="mt-4 h-11 w-full max-w-lg rounded border bg-white px-4 outline-[#f0442b]"
-              name="imageUrl"
-              onChange={onChange}
-              placeholder="https://exemplo.com/foto.jpg"
-              type="url"
-              value={formData.imageUrl}
+        <p className="mb-2 font-black">Foto do imóvel (upload direto)</p>
+        <label className="grid min-h-52 cursor-pointer place-items-center overflow-hidden rounded border-2 border-dashed border-[#bbb] bg-[#fafafa] text-center">
+          {imagePreview ? (
+            <img
+              alt="Pre-visualizacao do imovel"
+              className="h-64 w-full object-cover"
+              src={imagePreview}
             />
-          </div>
-        </div>
+          ) : (
+            <div className="px-4">
+              <FiUploadCloud className="mx-auto mb-3 text-5xl text-[#f0442b]" />
+              <p className="font-black">Clique para carregar uma imagem</p>
+              <p className="mt-2 font-bold text-[#666]">JPG, PNG ou WebP ate 8MB</p>
+            </div>
+          )}
+            <input
+              accept="image/*"
+              className="sr-only"
+              name="imageFile"
+              onChange={onImageChange}
+              type="file"
+            />
+        </label>
         <p className="mt-3 font-bold text-[#666]">
-          O carregamento direto de ficheiros ainda não está disponível na API.
+          A imagem sera enviada diretamente para a Rentu apos concluir o cadastro.
         </p>
       </div>
     </div>

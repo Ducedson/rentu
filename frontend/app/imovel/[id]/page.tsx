@@ -103,6 +103,8 @@ export default function PropertyDetailPage() {
   const photos = property.images.length > 0
     ? property.images.map((img) => normalizeImageUrl(img.url))
     : ["/assets/a.jpg"]; // fallback image
+  const ownerPhone = property.owner.phone?.replace(/\D/g, "");
+  const whatsappHref = ownerPhone ? `https://wa.me/${ownerPhone}` : "";
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("pt-MZ", {
@@ -249,6 +251,30 @@ export default function PropertyDetailPage() {
           <p className="absolute left-4 top-5 text-xl font-black sm:left-10 sm:top-8 sm:text-2xl">
             {photoIndex + 1}/{photos.length}
           </p>
+          <div className="absolute bottom-5 left-4 right-4 z-10 rounded bg-white p-4 text-black shadow-2xl sm:bottom-8 sm:left-10 sm:right-auto sm:w-[360px] sm:p-5">
+            <p className="text-sm font-black uppercase tracking-wide text-[#f0442b]">
+              Administrador Rentu
+            </p>
+            <div className="mt-3 flex items-center gap-3">
+              <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#f4f4f4]">
+                <FiUser className="text-xl" />
+              </span>
+              <div>
+                <p className="text-lg font-black">{property.owner.name}</p>
+                <p className="font-bold text-[#777]">Proprietario</p>
+              </div>
+            </div>
+            {whatsappHref ? (
+              <a
+                className="mt-4 grid h-11 place-items-center rounded bg-[#25d366] font-black text-white"
+                href={whatsappHref}
+                rel="noreferrer"
+                target="_blank"
+              >
+                Falar no WhatsApp
+              </a>
+            ) : null}
+          </div>
           <button
             className="absolute left-3 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/20 hover:bg-white/30 sm:left-8 sm:size-12"
             onClick={() => setPhotoIndex((value) => Math.max(0, value - 1))}

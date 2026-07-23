@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Delete,
@@ -7,9 +8,15 @@ import {
   Patch,
   Post,
   Query,
+  UploadedFile,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { PropertyPurpose, PropertyType, UserRole } from '@prisma/client';
+import { mkdirSync } from 'fs';
+import { diskStorage } from 'multer';
+import { extname, join } from 'path';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { CurrentUser } from '../common/decorators/current-user.decorator';
 import { Roles, RolesGuard } from '../common/guards/roles.guard';
@@ -114,6 +121,47 @@ export class PropertiesController {
     @Body() dto: CreatePropertyImageDto,
   ) {
     return this.propertiesService.addImage(id, user, dto);
+  }
+
+  @Post(':id/images/upload')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(
+    FileInterceptor('image', {
+      storage: diskStorage({
+        destination: (_req, _file, callback) => {
+          const uploadPath = join(process.cwd(), 'public', 'uploads');
+          mkdirSync(uploadPath, { recursive: true });
+          callback(null, uploadPath);
+        },
+        filename: (_req, file, callback) => {
+          const extension = extname(file.originalname) || '.jpg';
+          const filename = `${Date.now()}-${Math.round(
+            Math.random() * 1e9,
+          )}${extension}`;
+          callback(null, filename);
+        },
+      }),
+      fileFilter: (_req, file, callback) => {
+        callback(null, file.mimetype.startsWith('image/'));
+      },
+      limits: { fileSize: 8 * 1024 * 1024 },
+    }),
+  )
+  uploadImage(
+    @Param('id') id: string,
+    @CurrentUser() user: { id: string; role: UserRole },
+    @UploadedFile() file,
+  ) {
+    if (!file) {
+      throw new BadRequestException('Envie uma imagem valida.');
+    }
+
+    return this.propertiesService.addImage(id, user, {
+      url: `/uploads/${file.filename}`,
+      altText: file.originalname,
+      isCover: true,
+      sortOrder: 0,
+    });
   }
 
   @Patch(':id/images/:imageId')
