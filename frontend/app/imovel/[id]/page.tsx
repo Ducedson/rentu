@@ -4,7 +4,13 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { FaBath, FaBed } from "react-icons/fa";
-import { FiChevronLeft, FiChevronRight, FiUser, FiX } from "react-icons/fi";
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiMessageCircle,
+  FiUser,
+  FiX,
+} from "react-icons/fi";
 import { RentuFooter, RentuHeader } from "../../components/rentu-chrome";
 import { getProperty, Property } from "@/lib/api";
 import { normalizeImageUrl } from "@/lib/properties-ui";
@@ -35,6 +41,18 @@ function MetricComponent({ icon, value, label, compact = false }: Metric) {
       <p className="text-xs font-medium text-[#999]">{label}</p>
     </div>
   );
+}
+
+function getWhatsappHref(phone?: string) {
+  const digits = phone?.replace(/\D/g, "");
+
+  if (!digits) {
+    return "";
+  }
+
+  const normalizedPhone = digits.startsWith("258") ? digits : `258${digits}`;
+
+  return `https://wa.me/${normalizedPhone}`;
 }
 
 export default function PropertyDetailPage() {
@@ -103,8 +121,8 @@ export default function PropertyDetailPage() {
   const photos = property.images.length > 0
     ? property.images.map((img) => normalizeImageUrl(img.url))
     : ["/assets/a.jpg"]; // fallback image
-  const ownerPhone = property.owner.phone?.replace(/\D/g, "");
-  const whatsappHref = ownerPhone ? `https://wa.me/${ownerPhone}` : "";
+  const publisherName = property.owner.name || "Proprietário";
+  const whatsappHref = getWhatsappHref(property.owner.phone);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("pt-MZ", {
@@ -208,32 +226,27 @@ export default function PropertyDetailPage() {
             )}
           </section>
 
-          <aside className="h-fit rounded border p-5 shadow-sm sm:p-6">
-            <div className="mb-6 flex items-center gap-3">
-              <span className="grid size-12 place-items-center rounded-full bg-[#f4f4f4]">
+          <aside className="h-fit rounded border border-black/20 p-5 shadow-sm sm:p-7">
+            <div className="flex items-center gap-4">
+              <span className="grid size-14 shrink-0 place-items-center rounded-full bg-[#f4f4f4]">
                 <FiUser className="text-2xl" />
               </span>
               <div>
-                <p className="text-xl font-black">{property.owner.name}</p>
+                <p className="text-2xl font-black leading-tight">{publisherName}</p>
                 <p className="font-bold text-[#777]">Proprietário</p>
               </div>
             </div>
-            {property.owner.phone && (
-              <>
-                <a
-                  className="mb-4 grid h-12 place-items-center rounded bg-[#f0442b] text-lg font-black text-white"
-                  href={`tel:${property.owner.phone}`}
-                >
-                  Contactar
-                </a>
-                <a
-                  className="grid h-12 place-items-center rounded border border-[#f0442b] text-lg font-black text-[#f0442b]"
-                  href={`https://wa.me/${property.owner.phone.replace(/\D/g, "")}`}
-                >
-                  Whatsapp
-                </a>
-              </>
-            )}
+            {whatsappHref ? (
+              <a
+                className="mt-7 flex h-12 items-center justify-center gap-2 rounded bg-[#25d366] text-lg font-black text-white transition-colors hover:bg-[#1fb457]"
+                href={whatsappHref}
+                rel="noreferrer"
+                target="_blank"
+              >
+                <FiMessageCircle className="text-xl" />
+                Falar no WhatsApp
+              </a>
+            ) : null}
           </aside>
         </div>
       </section>
