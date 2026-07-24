@@ -251,10 +251,14 @@ export default function PropertyDetailPage() {
           <p className="absolute left-4 top-5 text-xl font-black sm:left-10 sm:top-8 sm:text-2xl">
             {photoIndex + 1}/{photos.length}
           </p>
-          <div className="absolute bottom-5 left-4 right-4 z-10 rounded bg-white p-4 text-black shadow-2xl sm:bottom-8 sm:left-10 sm:right-auto sm:w-[360px] sm:p-5">
+          <div className="absolute bottom-5 left-4 right-4 z-10 rounded bg-white p-4 text-black shadow-2xl sm:bottom-8 sm:left-10 sm:right-auto sm:w-[380px] sm:p-5">
             <p className="text-sm font-black uppercase tracking-wide text-[#f0442b]">
               Administrador Rentu
             </p>
+            <div className="mt-3 rounded bg-[#f8f8f8] p-3">
+              <p className="text-xs font-black uppercase text-[#777]">Intermediario</p>
+              <p className="mt-1 text-lg font-black">{property.owner.name}</p>
+            </div>
             <div className="mt-3 flex items-center gap-3">
               <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#f4f4f4]">
                 <FiUser className="text-xl" />
