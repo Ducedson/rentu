@@ -32,11 +32,11 @@ export default function AgentDashboardPage() {
           <div className="mb-8 flex flex-col justify-between gap-5 rounded bg-[#f8f8f8] p-7 md:flex-row md:items-center">
             <div>
               <p className="flex items-center gap-2 text-sm font-black uppercase text-[#f0442b]">
-                <FiHome /> Dashboard do intermediario
+                <FiHome /> Dashboard do intermediário
               </p>
-              <h1 className="mt-2 text-3xl font-black">Ola, {user?.name}</h1>
+              <h1 className="mt-2 text-3xl font-black">Olá, {user?.name}</h1>
               <p className="mt-2 font-semibold text-gray-600">
-                Acompanhe as casas submetidas e o estado de aprovacao pelo admin.
+                Acompanhe as casas submetidas e o estado de aprovação pelo admin.
               </p>
             </div>
             <Link className="inline-flex h-12 items-center gap-2 rounded bg-[#f0442b] px-6 font-black text-white" href="/adicionar-casa">
@@ -46,7 +46,7 @@ export default function AgentDashboardPage() {
 
           <div className="mb-8 grid gap-5 md:grid-cols-3">
             <Summary icon={<FiHome />} title="Total submetidas" value={properties.length} />
-            <Summary icon={<FiClock />} title="Em aprovacao" value={pending} />
+            <Summary icon={<FiClock />} title="Em aprovação" value={pending} />
             <Summary icon={<FiCheckCircle />} title="Publicadas" value={published} />
           </div>
 
@@ -56,7 +56,7 @@ export default function AgentDashboardPage() {
           ) : properties.length === 0 ? (
             <div className="rounded border border-dashed p-10 text-center">
               <FiHome className="mx-auto mb-3 text-4xl text-[#f0442b]" />
-              <p className="font-bold text-gray-600">Ainda nao submeteu nenhuma casa.</p>
+              <p className="font-bold text-gray-600">Ainda não submeteu nenhuma casa.</p>
               <Link className="mt-5 inline-flex rounded bg-[#f0442b] px-6 py-3 font-black text-white" href="/adicionar-casa">
                 Adicionar primeira casa
               </Link>
@@ -66,10 +66,10 @@ export default function AgentDashboardPage() {
               <table className="w-full">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th className="px-5 py-4 text-left font-black">Imovel</th>
-                    <th className="px-5 py-4 text-left font-black">Preco</th>
+                    <th className="px-5 py-4 text-left font-black">Imóvel</th>
+                    <th className="px-5 py-4 text-left font-black">Preço</th>
                     <th className="px-5 py-4 text-left font-black">Estado</th>
-                    <th className="px-5 py-4 text-left font-black">Notificacao</th>
+                    <th className="px-5 py-4 text-left font-black">Notificação</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -92,9 +92,9 @@ export default function AgentDashboardPage() {
                       </td>
                       <td className="px-5 py-4 text-sm font-semibold text-gray-600">
                         {property.status === "PUBLISHED"
-                          ? "Aprovada pelo admin e visivel no site."
+                          ? "Aprovada pelo admin e visível no site."
                           : property.status === "DRAFT"
-                            ? "ProcessingInstruction de aprovacao: aguardando revisao do admin."
+                            ? "Em processo de aprovação: aguardando revisão do admin."
                             : "Atualizada pelo admin."}
                       </td>
                     </tr>

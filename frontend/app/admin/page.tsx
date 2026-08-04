@@ -123,7 +123,7 @@ export default function AdminDashboard() {
               <StatCard
                 icon={<FiMapPin />}
                 number={properties.length}
-                title="Total de Imoveis"
+                title="Total de Imóveis"
                 subtitle={loading ? "Carregando..." : "Propriedades cadastradas"}
                 color="blue"
               />
@@ -131,21 +131,21 @@ export default function AdminDashboard() {
                 icon={<FiCheck />}
                 number={stats.published}
                 title="Publicados"
-                subtitle="Visiveis no site publico"
+                subtitle="Visíveis no site público"
                 color="green"
               />
               <StatCard
                 icon={<FiClock />}
                 number={stats.drafts}
                 title="Rascunhos"
-                subtitle="Aguardando publicacao"
+                subtitle="Aguardando publicação"
                 color="orange"
               />
               <StatCard
                 icon={<FiTrendingUp />}
                 number={stats.withImages}
                 title="Com Imagens"
-                subtitle="Imoveis com galeria"
+                subtitle="Imóveis com galeria"
                 color="red"
               />
             </div>
@@ -154,8 +154,8 @@ export default function AdminDashboard() {
               <section className="rounded-lg bg-white p-6 shadow lg:col-span-2">
                 <div className="mb-6 flex items-center justify-between gap-4">
                   <div>
-                    <h2 className="text-xl font-black text-gray-900">Imoveis Recentes</h2>
-                    <p className="text-sm text-gray-500">Ultimas propriedades cadastradas</p>
+                    <h2 className="text-xl font-black text-gray-900">Imóveis Recentes</h2>
+                    <p className="text-sm text-gray-500">Últimas propriedades cadastradas</p>
                   </div>
                   <Link
                     href="/admin/properties"
@@ -166,10 +166,10 @@ export default function AdminDashboard() {
                 </div>
 
                 {loading ? (
-                  <p className="py-8 text-center font-medium text-gray-600">Carregando imoveis...</p>
+                  <p className="py-8 text-center font-medium text-gray-600">Carregando imóveis...</p>
                 ) : recentProperties.length === 0 ? (
                   <div className="py-8 text-center">
-                    <p className="mb-4 text-gray-600">Nenhum imovel cadastrado ainda.</p>
+                    <p className="mb-4 text-gray-600">Nenhum imóvel cadastrado ainda.</p>
                     <Link
                       href="/admin/properties/create"
                       className="inline-flex rounded-lg bg-[#f0442b] px-5 py-2 font-bold text-white hover:bg-[#d63220]"
@@ -182,9 +182,9 @@ export default function AdminDashboard() {
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="border-b border-gray-200">
-                          <th className="px-4 py-3 text-left font-bold text-gray-600">Titulo</th>
+                          <th className="px-4 py-3 text-left font-bold text-gray-600">Título</th>
                           <th className="px-4 py-3 text-left font-bold text-gray-600">Cidade</th>
-                          <th className="px-4 py-3 text-left font-bold text-gray-600">Preco</th>
+                          <th className="px-4 py-3 text-left font-bold text-gray-600">Preço</th>
                           <th className="px-4 py-3 text-left font-bold text-gray-600">Status</th>
                           <th className="px-4 py-3 text-left font-bold text-gray-600">Data</th>
                         </tr>
@@ -220,7 +220,7 @@ export default function AdminDashboard() {
               <section className="rounded-lg bg-white p-6 shadow">
                 <div className="mb-6 flex items-center gap-2">
                   <FiTrendingUp className="text-[#f0442b]" />
-                  <h3 className="text-lg font-black text-gray-900">Imoveis por Status</h3>
+                  <h3 className="text-lg font-black text-gray-900">Imóveis por Status</h3>
                 </div>
 
                 {statusSummary.length === 0 ? (
@@ -249,7 +249,7 @@ export default function AdminDashboard() {
                 <div className="mt-8 rounded-lg bg-gray-50 p-4">
                   <p className="text-sm font-bold text-gray-900">Arquivados</p>
                   <p className="mt-1 text-2xl font-black text-gray-900">{stats.archived}</p>
-                  <p className="mt-1 text-xs text-gray-500">Ocultos no site publico</p>
+                  <p className="mt-1 text-xs text-gray-500">Ocultos no site público</p>
                 </div>
               </section>
             </div>

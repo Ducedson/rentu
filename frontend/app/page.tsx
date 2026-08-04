@@ -39,22 +39,22 @@ export default function Home() {
 
       <section className="mx-auto max-w-[1380px] px-4 pt-4 sm:px-6 lg:px-10 lg:pt-6">
         <div
-          className="relative flex min-h-[520px] items-center justify-center overflow-hidden bg-cover bg-center text-white sm:min-h-[565px]"
+          className="relative flex min-h-[560px] items-center justify-center overflow-hidden bg-cover bg-center bg-fixed text-white sm:min-h-[585px]"
           style={{
             backgroundImage:
-              "linear-gradient(rgba(0,0,0,.42), rgba(0,0,0,.42)), url(/assets/kuvu.jpg)",
+              "linear-gradient(90deg, rgba(0,0,0,.62), rgba(0,0,0,.34)), url(/assets/hero-living.jpg)",
           }}
         >
           <div className="mx-auto flex w-full max-w-[1120px] flex-col items-center px-4 text-center sm:px-6">
             <h1 className="text-4xl font-black leading-tight sm:text-[46px] md:text-[52px]">
-              Procurando Imovel Para Arrendar?
+              Procurando Imóvel Para Arrendar?
             </h1>
             <p className="mt-5 max-w-[980px] text-lg font-extrabold leading-snug sm:mt-6 sm:text-[25px]">
-              A Rentu disponibiliza casas, flats e escritorios confortaveis para habitacao provisoria e empreendimento.
+              A Rentu disponibiliza casas, flats e escritórios confortáveis para habitação provisória e empreendimento.
             </p>
 
             <form
-              className="mt-8 grid w-full max-w-[820px] gap-3 rounded bg-white p-3 shadow-2xl sm:mt-12 sm:flex sm:items-center"
+              className="mt-8 grid w-full max-w-[860px] grid-cols-[1fr_auto] gap-3 rounded bg-white p-3 shadow-2xl sm:mt-12 sm:flex sm:items-center"
               onSubmit={(event) => {
                 event.preventDefault();
                 runSearch();
@@ -63,11 +63,11 @@ export default function Home() {
               <input
                 className="h-12 min-w-0 flex-1 rounded border border-gray-100 px-3 text-base font-medium text-[#555] outline-none sm:border-0 sm:px-4 sm:text-[18px]"
                 onChange={(event) => setQuery(event.target.value)}
-                placeholder="Pesquise por cidade, bairro ou tipo de imovel..."
+                placeholder="Pesquise por cidade, bairro ou tipo de imóvel..."
                 value={query}
               />
               <button
-                className="grid size-12 place-items-center rounded bg-[#fee2dd] text-[#f0442b] sm:mr-4"
+                className="grid size-12 shrink-0 place-items-center rounded bg-[#fee2dd] text-[#f0442b] sm:mr-1"
                 type="button"
                 aria-label="Filtros"
                 aria-expanded={advancedOpen}
@@ -75,14 +75,14 @@ export default function Home() {
               >
                 <FiSliders className="text-2xl" aria-hidden />
               </button>
-              <button className="flex h-12 items-center justify-center gap-3 rounded bg-[#f0442b] px-5 text-base font-extrabold text-white sm:text-[18px]" type="submit">
+              <button className="col-span-2 flex h-12 items-center justify-center gap-3 rounded bg-[#f0442b] px-5 text-base font-extrabold text-white sm:col-span-1 sm:text-[18px]" type="submit">
                 Pesquisar <FiSearch className="text-xl" aria-hidden />
               </button>
             </form>
 
             {advancedOpen ? (
               <div className="mt-3 w-full max-w-[720px] rounded border border-[#cfcfcf] bg-white p-4 text-left text-black shadow-[0_2px_6px_rgba(0,0,0,0.18)]">
-                <p className="mb-3 text-sm font-black uppercase text-gray-500">Tipo de imovel</p>
+                <p className="mb-3 text-sm font-black uppercase text-gray-500">Tipo de imóvel</p>
                 <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-4">
                   <button
                     className={`rounded border px-3 py-2 text-left text-sm font-black ${!type ? "border-[#f0442b] bg-[#fee2dd]" : ""}`}
@@ -105,16 +105,16 @@ export default function Home() {
               </div>
             ) : null}
 
-            <div className="mt-9 flex flex-wrap justify-center gap-4">
-              <Link href="/tipo-casa?tipo=HOUSE" className="flex h-11 min-w-32 items-center justify-center gap-2 rounded-full bg-black/60 px-8 text-[16px] font-extrabold backdrop-blur">
+            <div className="mt-9 grid w-full max-w-[720px] grid-cols-2 gap-3 sm:flex sm:flex-wrap sm:justify-center sm:gap-4">
+              <Link href="/tipo-casa?tipo=HOUSE" className="flex h-12 items-center justify-center gap-2 rounded-full bg-black/60 px-6 text-[16px] font-extrabold backdrop-blur sm:min-w-40">
                 <FiHome className="text-xl" aria-hidden />
                 Casas
               </Link>
-              <Link href="/tipo-casa?tipo=OFFICE" className="flex h-11 min-w-36 items-center justify-center gap-2 rounded-full bg-black/60 px-8 text-[16px] font-extrabold backdrop-blur">
+              <Link href="/tipo-casa?tipo=OFFICE" className="flex h-12 items-center justify-center gap-2 rounded-full bg-black/60 px-6 text-[16px] font-extrabold backdrop-blur sm:min-w-40">
                 <FiBriefcase className="text-xl" aria-hidden />
-                Escritorios
+                Escritórios
               </Link>
-              <Link href="/tipo-casa?tipo=APARTMENT" className="flex h-11 min-w-32 items-center justify-center gap-2 rounded-full bg-black/60 px-8 text-[16px] font-extrabold backdrop-blur">
+              <Link href="/tipo-casa?tipo=APARTMENT" className="col-span-2 mx-auto flex h-12 w-1/2 min-w-40 items-center justify-center gap-2 rounded-full bg-black/60 px-6 text-[16px] font-extrabold backdrop-blur sm:col-span-1 sm:mx-0 sm:w-auto sm:min-w-40">
                 <HiOutlineBuildingOffice2 className="text-xl" aria-hidden />
                 Flats
               </Link>
@@ -127,7 +127,7 @@ export default function Home() {
         <div className="mb-12 text-center">
           <h2 className="text-3xl font-black sm:text-[48px]">Casas Mais Recentes</h2>
           <p className="mt-4 text-base font-extrabold text-[#6d6d6d] sm:mt-5 sm:text-[21px]">
-            Imóveis publicados e prontos para visita no Website.
+            Imóveis publicados e prontos para visita no website.
           </p>
         </div>
 
@@ -141,23 +141,23 @@ export default function Home() {
               <article className="overflow-hidden bg-white shadow-[0_2px_5px_rgba(0,0,0,0.25)]" key={property.id}>
                 <div className="relative h-64 bg-cover bg-center sm:h-[320px]" style={{ backgroundImage: `url(${getPropertyCover(property)})` }}>
                   <span className="absolute left-4 top-5 rounded bg-[#f0442b] px-4 py-2 text-[15px] font-bold text-white">
-                    Disponivel
+                    Disponível
                   </span>
-                  <span className="absolute left-4 top-16 rounded bg-black/55 px-3 py-1 text-xs font-black text-white">
+                  <span className="absolute left-4 top-[64px] rounded bg-black/65 px-4 py-2 text-[15px] font-bold text-white">
                     {getPropertyTypeLabel(property.type)}
                   </span>
                   <div className="absolute bottom-4 right-4 flex gap-2">
-                    <Link className="grid size-9 place-items-center rounded bg-black/35 text-white backdrop-blur" aria-label="Abrir imovel" href={`/imovel/${property.id}`}>
+                    <Link className="grid size-9 place-items-center rounded bg-black/35 text-white backdrop-blur" aria-label="Abrir imóvel" href={`/imovel/${property.id}`}>
                       <FiMaximize2 aria-hidden />
                     </Link>
-                    <button className="grid size-9 place-items-center rounded bg-black/35 text-white backdrop-blur" aria-label="Guardar imovel">
+                    <button className="grid size-9 place-items-center rounded bg-black/35 text-white backdrop-blur" aria-label="Guardar imóvel">
                       <FiHeart aria-hidden />
                     </button>
                   </div>
                 </div>
 
                 <div className="p-6">
-                  <h3 className="text-[21px] font-black">Preco: {formatPropertyPrice(property)}</h3>
+                  <h3 className="text-[21px] font-black">Preço: {formatPropertyPrice(property)}</h3>
                   <p className="mt-4 text-[18px] font-bold text-[#7a7a7a]">
                     {property.city}{property.district ? `, ${property.district}` : ""}
                   </p>
@@ -169,7 +169,7 @@ export default function Home() {
                   <div className="mt-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                     <div className="flex items-center gap-3 text-[#777]">
                       <FiUser className="text-2xl text-black" aria-hidden />
-                      <span className="text-[16px] font-bold">{property.owner?.name || "Rentu"}</span>
+                      <span className="text-[16px] font-bold">Proprietário</span>
                     </div>
                     <Link className="rounded bg-[#f0442b] px-5 py-3 text-[17px] font-extrabold text-white" href={`/imovel/${property.id}`}>
                       Contactar
@@ -210,7 +210,7 @@ export default function Home() {
             >
               <div className="relative h-64 bg-cover bg-center sm:h-[310px]" style={{ backgroundImage: `url(${getPropertyCover(property)})` }}>
                 <span className="absolute left-4 top-4 rounded bg-[#f0442b] px-3 py-1 text-[14px] font-bold uppercase tracking-wider text-white">
-                  Disponivel
+                  Disponível
                 </span>
                 <div className="absolute bottom-4 right-4 flex gap-2">
                   <Link className="grid size-9 place-items-center rounded bg-black/45 text-white backdrop-blur" href={`/imovel/${property.id}`} aria-label="Abrir imagem">
@@ -223,7 +223,7 @@ export default function Home() {
               </div>
 
               <div className="p-6">
-                <p className="text-[20px] font-black text-[#111]">Preco: {formatPropertyPrice(property)}</p>
+                <p className="text-[20px] font-black text-[#111]">Preço: {formatPropertyPrice(property)}</p>
                 <p className="mt-1 text-[15px] font-bold text-[#6d6d6d]">
                   {property.city}{property.district ? `, ${property.district}` : ""}
                 </p>
@@ -244,7 +244,7 @@ export default function Home() {
                 <div className="mt-5 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
                   <div className="flex items-center gap-2 text-[15px] font-bold text-[#444]">
                     <FiUser className="text-lg text-gray-400" />
-                    <span>{property.owner?.name || "Rentu"}</span>
+                    <span>Proprietário</span>
                   </div>
                   <Link
                     href={`/imovel/${property.id}`}

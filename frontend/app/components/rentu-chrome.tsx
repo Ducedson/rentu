@@ -8,9 +8,9 @@ import { FaFacebookF, FaInstagram, FaLinkedinIn, FaWhatsapp } from "react-icons/
 import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
 
 const navLinks = [
-  { href: "/", label: "Inicio" },
+  { href: "/", label: "Início" },
   { href: "/tipo-casa", label: "Tipo de Casa" },
-  { href: "/sobre-nos", label: "Sobre Nos" },
+  { href: "/sobre-nos", label: "Sobre Nós" },
   { href: "/contacto", label: "Contacto" },
 ];
 
@@ -115,22 +115,22 @@ export function RentuFooter() {
     <footer className="mt-16 bg-black text-white">
       <div className="mx-auto grid max-w-[1480px] gap-10 px-5 py-14 sm:px-8 md:grid-cols-2 md:px-10 lg:grid-cols-[1.15fr_1fr_1.15fr_1.25fr] lg:gap-14 lg:py-24">
         <section id="sobre">
-          <h2 className="mb-8 text-xl font-black lg:mb-12">Sobre Nos</h2>
+          <h2 className="mb-8 text-xl font-black lg:mb-12">Sobre Nós</h2>
           <p className="max-w-[330px] text-base font-semibold leading-7 lg:text-lg">
             A Rentu nasceu da necessidade de simplificar uma das jornadas mais
             importantes na vida de qualquer pessoa que busca por um lar via
-            arrendamento e com base no seu orcamento.
+            arrendamento e com base no seu orçamento.
           </p>
         </section>
 
         <section>
-          <h2 className="mb-8 text-xl font-black lg:mb-10">Acesso Rapido</h2>
+          <h2 className="mb-8 text-xl font-black lg:mb-10">Acesso Rápido</h2>
           <nav className="flex flex-col gap-4 text-base font-semibold lg:text-lg">
-            <Link href="/">Inicio</Link>
-            <Link href="/sobre-nos">Sobre Nos</Link>
+            <Link href="/">Início</Link>
+            <Link href="/sobre-nos">Sobre Nós</Link>
             <Link href="/tipo-casa">Casas</Link>
-            <Link href="/#intermediarios">Intermediarios</Link>
-            <Link href="/#noticias">Noticias</Link>
+            <Link href="/#intermediarios">Intermediários</Link>
+            <Link href="/#noticias">Notícias</Link>
             <Link href="/contacto">Contacto</Link>
           </nav>
         </section>
@@ -206,7 +206,7 @@ export function RentuFooter() {
             Copyright. Rentu - 2026. Desenvolvido pela MaCh.
           </p>
           <a className="text-base font-semibold lg:text-lg" href="#">
-            Termos & Condicoes
+            Termos & Condições
           </a>
         </div>
       </div>

@@ -3,9 +3,9 @@ import { Property } from "./api";
 export const PROPERTY_TYPE_LABELS: Record<string, string> = {
   HOUSE: "Casas",
   APARTMENT: "Flats",
-  OFFICE: "Escritorios",
+  OFFICE: "Escritórios",
   STORE: "Lojas",
-  WAREHOUSE: "Armazens",
+  WAREHOUSE: "Armazéns",
   LAND: "Terrenos",
   FARM: "Quintas",
   OTHER: "Outros",
@@ -14,15 +14,15 @@ export const PROPERTY_TYPE_LABELS: Record<string, string> = {
 export const PROPERTY_TYPE_OPTIONS = [
   { value: "HOUSE", label: "Casas" },
   { value: "APARTMENT", label: "Flats" },
-  { value: "OFFICE", label: "Escritorios" },
+  { value: "OFFICE", label: "Escritórios" },
   { value: "STORE", label: "Lojas" },
-  { value: "WAREHOUSE", label: "Armazens" },
+  { value: "WAREHOUSE", label: "Armazéns" },
   { value: "LAND", label: "Terrenos" },
   { value: "OTHER", label: "Outros" },
 ];
 
 export const STATUS_LABELS: Record<string, string> = {
-  DRAFT: "Em aprovacao",
+  DRAFT: "Em aprovação",
   PUBLISHED: "Publicado",
   ARCHIVED: "Arquivado",
   RESERVED: "Reservado",
@@ -60,6 +60,16 @@ export function formatPropertyPrice(property: Pick<Property, "price" | "currency
     currency: property.currency || "MZN",
     maximumFractionDigits: 0,
   }).format(Number(property.price));
+}
+
+export function sanitizePublicDescription(description: string) {
+  return description
+    .replace(/[\p{Extended_Pictographic}\uFE0F]/gu, "")
+    .split("\n")
+    .filter((line) => !/^\s*[-•]?\s*conta(?:c|t)o\s*:/i.test(line))
+    .map((line) => line.replace(/[ \t]{2,}/g, " ").trimEnd())
+    .join("\n")
+    .trim();
 }
 
 export function getDashboardPath(role?: string) {

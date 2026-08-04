@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -8,12 +8,13 @@ import {
   FiChevronLeft,
   FiChevronRight,
   FiMessageCircle,
+  FiMessageSquare,
   FiUser,
   FiX,
 } from "react-icons/fi";
 import { RentuFooter, RentuHeader } from "../../components/rentu-chrome";
 import { getProperty, Property } from "@/lib/api";
-import { normalizeImageUrl } from "@/lib/properties-ui";
+import { getPropertyTypeLabel, normalizeImageUrl, sanitizePublicDescription } from "@/lib/properties-ui";
 interface Metric {
   icon: React.ReactNode;
   value: string;
@@ -53,6 +54,26 @@ function getWhatsappHref(phone?: string) {
   const normalizedPhone = digits.startsWith("258") ? digits : `258${digits}`;
 
   return `https://wa.me/${normalizedPhone}`;
+}
+
+function getSmsHref(phone?: string) {
+  const digits = phone?.replace(/\D/g, "");
+
+  if (!digits) {
+    return "";
+  }
+
+  const normalizedPhone = digits.startsWith("258") ? `+${digits}` : `+258${digits}`;
+
+  return `sms:${normalizedPhone}`;
+}
+
+function getPublicOwnerName(name?: string) {
+  if (!name || /administrador\s+rentu/i.test(name)) {
+    return "Proprietário do imóvel";
+  }
+
+  return name;
 }
 
 export default function PropertyDetailPage() {
@@ -121,8 +142,10 @@ export default function PropertyDetailPage() {
   const photos = property.images.length > 0
     ? property.images.map((img) => normalizeImageUrl(img.url))
     : ["/assets/a.jpg"]; // fallback image
-  const publisherName = property.owner.name || "Proprietário";
+  const publisherName = getPublicOwnerName(property.owner.name);
   const whatsappHref = getWhatsappHref(property.owner.phone);
+  const smsHref = getSmsHref(property.owner.phone);
+  const publicDescription = sanitizePublicDescription(property.description);
 
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat("pt-MZ", {
@@ -172,7 +195,7 @@ export default function PropertyDetailPage() {
             <h2 className="mb-6 text-2xl font-black">Informações do Imóvel</h2>
             <dl className="grid max-w-xl grid-cols-1 gap-y-3 text-base sm:grid-cols-2 sm:gap-y-5 sm:text-lg">
               <dt className="font-black">Tipo</dt>
-              <dd className="capitalize">{property.type.toLowerCase()}</dd>
+              <dd>{getPropertyTypeLabel(property.type)}</dd>
               
               <dt className="font-black">Cidade</dt>
               <dd>{property.city}</dd>
@@ -211,7 +234,7 @@ export default function PropertyDetailPage() {
 
             <h2 className="mb-4 mt-10 text-2xl font-black">Descrição</h2>
             <p className="max-w-2xl whitespace-pre-line text-lg font-medium leading-8 text-[#444]">
-              {property.description}
+              {publicDescription || "Sem descrição adicional."}
             </p>
 
             {property.address && (
@@ -227,26 +250,40 @@ export default function PropertyDetailPage() {
           </section>
 
           <aside className="h-fit rounded border border-black/20 p-5 shadow-sm sm:p-7">
+            <p className="mb-5 text-sm font-black uppercase tracking-wide text-[#f0442b]">
+              Contactar
+            </p>
             <div className="flex items-center gap-4">
               <span className="grid size-14 shrink-0 place-items-center rounded-full bg-[#f4f4f4]">
                 <FiUser className="text-2xl" />
               </span>
               <div>
                 <p className="text-2xl font-black leading-tight">{publisherName}</p>
-                <p className="font-bold text-[#777]">Proprietário</p>
+                <p className="font-bold text-[#777]">Dono ou intermediário</p>
               </div>
             </div>
-            {whatsappHref ? (
-              <a
-                className="mt-7 flex h-12 items-center justify-center gap-2 rounded bg-[#25d366] text-lg font-black text-white transition-colors hover:bg-[#1fb457]"
-                href={whatsappHref}
-                rel="noreferrer"
-                target="_blank"
-              >
-                <FiMessageCircle className="text-xl" />
-                Falar no WhatsApp
-              </a>
-            ) : null}
+            <div className="mt-7 grid gap-3">
+              {whatsappHref ? (
+                <a
+                  className="flex h-12 items-center justify-center gap-2 rounded bg-[#25d366] text-lg font-black text-white transition-colors hover:bg-[#1fb457]"
+                  href={whatsappHref}
+                  rel="noreferrer"
+                  target="_blank"
+                >
+                  <FiMessageCircle className="text-xl" />
+                  Falar no WhatsApp
+                </a>
+              ) : null}
+              {smsHref ? (
+                <a
+                  className="flex h-12 items-center justify-center gap-2 rounded border border-black/20 bg-white text-lg font-black text-black transition-colors hover:bg-[#f7f7f7]"
+                  href={smsHref}
+                >
+                  <FiMessageSquare className="text-xl" />
+                  Enviar SMS
+                </a>
+              ) : null}
+            </div>
           </aside>
         </div>
       </section>
@@ -264,34 +301,6 @@ export default function PropertyDetailPage() {
           <p className="absolute left-4 top-5 text-xl font-black sm:left-10 sm:top-8 sm:text-2xl">
             {photoIndex + 1}/{photos.length}
           </p>
-          <div className="absolute bottom-5 left-4 right-4 z-10 rounded bg-white p-4 text-black shadow-2xl sm:bottom-8 sm:left-10 sm:right-auto sm:w-[380px] sm:p-5">
-            <p className="text-sm font-black uppercase tracking-wide text-[#f0442b]">
-              Administrador Rentu
-            </p>
-            <div className="mt-3 rounded bg-[#f8f8f8] p-3">
-              <p className="text-xs font-black uppercase text-[#777]">Intermediario</p>
-              <p className="mt-1 text-lg font-black">{property.owner.name}</p>
-            </div>
-            <div className="mt-3 flex items-center gap-3">
-              <span className="grid size-11 shrink-0 place-items-center rounded-full bg-[#f4f4f4]">
-                <FiUser className="text-xl" />
-              </span>
-              <div>
-                <p className="text-lg font-black">{property.owner.name}</p>
-                <p className="font-bold text-[#777]">Proprietario</p>
-              </div>
-            </div>
-            {whatsappHref ? (
-              <a
-                className="mt-4 grid h-11 place-items-center rounded bg-[#25d366] font-black text-white"
-                href={whatsappHref}
-                rel="noreferrer"
-                target="_blank"
-              >
-                Falar no WhatsApp
-              </a>
-            ) : null}
-          </div>
           <button
             className="absolute left-3 top-1/2 grid size-10 -translate-y-1/2 place-items-center rounded-full bg-white/20 hover:bg-white/30 sm:left-8 sm:size-12"
             onClick={() => setPhotoIndex((value) => Math.max(0, value - 1))}

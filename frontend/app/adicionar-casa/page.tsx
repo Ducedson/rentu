@@ -93,12 +93,12 @@ export default function AddHomePage() {
     }
 
     if (!file.type.startsWith("image/")) {
-      setError("Escolha um ficheiro de imagem valido.");
+      setError("Escolha um ficheiro de imagem válido.");
       return;
     }
 
     if (file.size > 8 * 1024 * 1024) {
-      setError("A imagem deve ter no maximo 8MB.");
+      setError("A imagem deve ter no máximo 8MB.");
       return;
     }
 
@@ -201,7 +201,7 @@ export default function AddHomePage() {
             <p className="mb-4 text-2xl font-black">Concluído</p>
             <h1 className="text-4xl font-black">Imóvel Adicionado com Sucesso</h1>
             <p className="mt-4 font-semibold text-[#666]">
-              O imovel entrou em ProcessingInstruction de aprovacao. Quando o admin aprovar, ele sera publicado e aparecera como aprovado na sua dashboard.
+              O imóvel entrou em processo de aprovação. Quando o admin aprovar, ele será publicado e aparecerá como aprovado na sua dashboard.
             </p>
             <div className="mt-8 flex justify-center gap-4">
               <Link
@@ -214,7 +214,7 @@ export default function AddHomePage() {
                 className="grid h-12 w-44 place-items-center rounded border font-black"
                 href="/tipo-casa"
               >
-                Ver imoveis
+                Ver imóveis
               </Link>
             </div>
           </div>
@@ -429,7 +429,7 @@ function LocationStep({
         <label className="grid min-h-52 cursor-pointer place-items-center overflow-hidden rounded border-2 border-dashed border-[#bbb] bg-[#fafafa] text-center">
           {imagePreview ? (
             <img
-              alt="Pre-visualizacao do imovel"
+              alt="Pré-visualização do imóvel"
               className="h-64 w-full object-cover"
               src={imagePreview}
             />
@@ -437,7 +437,7 @@ function LocationStep({
             <div className="px-4">
               <FiUploadCloud className="mx-auto mb-3 text-5xl text-[#f0442b]" />
               <p className="font-black">Clique para carregar uma imagem</p>
-              <p className="mt-2 font-bold text-[#666]">JPG, PNG ou WebP ate 8MB</p>
+              <p className="mt-2 font-bold text-[#666]">JPG, PNG ou WebP até 8MB</p>
             </div>
           )}
             <input
@@ -449,7 +449,7 @@ function LocationStep({
             />
         </label>
         <p className="mt-3 font-bold text-[#666]">
-          A imagem sera enviada diretamente para a Rentu apos concluir o cadastro.
+          A imagem será enviada diretamente para a Rentu após concluir o cadastro.
         </p>
       </div>
     </div>

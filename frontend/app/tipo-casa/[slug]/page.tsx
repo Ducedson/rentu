@@ -31,12 +31,12 @@ export default function TipoCasaDetailFallbackPage() {
         </Link>
 
         {loading ? (
-          <p className="rounded bg-[#f8f8f8] p-8 text-center font-bold">A carregar imovel...</p>
+          <p className="rounded bg-[#f8f8f8] p-8 text-center font-bold">A carregar imóvel...</p>
         ) : !property ? (
           <div className="rounded border border-dashed p-10 text-center">
-            <h1 className="text-2xl font-black">Imovel nao encontrado</h1>
+            <h1 className="text-2xl font-black">Imóvel não encontrado</h1>
             <Link className="mt-5 inline-flex rounded bg-[#f0442b] px-6 py-3 font-black text-white" href="/tipo-casa">
-              Ver todos os imoveis
+              Ver todos os imóveis
             </Link>
           </div>
         ) : (
@@ -58,7 +58,7 @@ export default function TipoCasaDetailFallbackPage() {
                 </div>
                 <p className="mt-6 whitespace-pre-line leading-7 text-gray-700">{property.description}</p>
                 <Link className="mt-8 inline-flex w-full justify-center rounded bg-[#f0442b] px-5 py-3 font-black text-white" href={`/imovel/${property.id}`}>
-                  Abrir descricao completa
+                  Abrir descrição completa
                 </Link>
               </div>
             </div>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 import { RentuHeader } from "../components/rentu-chrome";
 import { useAuth } from "@/lib/auth-context";
 import { registerUser } from "@/lib/api";
@@ -16,7 +17,7 @@ function getApiErrorMessage(error: unknown, fallback: string) {
     typeof error.code === "string" &&
     ["ERR_NETWORK", "ECONNREFUSED"].includes(error.code)
   ) {
-    return "Nao foi possivel ligar ao backend. Confirme se o servidor esta rodando em http://localhost:3001.";
+    return "Não foi possível ligar ao backend. Confirme se o servidor está rodando em http://localhost:3001.";
   }
 
   if (
@@ -52,6 +53,8 @@ export default function CreateAccountPage() {
   });
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const router = useRouter();
   const { login } = useAuth();
 
@@ -68,7 +71,7 @@ export default function CreateAccountPage() {
     setError("");
     setLoading(true);
 
-    // ValidaÃ§Ãµes
+    // Validações
     if (!formData.name || !formData.email || !formData.password) {
       setError("Por favor, preencha todos os campos");
       setLoading(false);
@@ -76,13 +79,13 @@ export default function CreateAccountPage() {
     }
 
     if (formData.password !== formData.confirmPassword) {
-      setError("As senhas nÃ£o coincidem");
+      setError("As senhas não coincidem");
       setLoading(false);
       return;
     }
 
     if (formData.password.length < 6) {
-      setError("A senha deve ter no mÃ­nimo 6 caracteres");
+      setError("A senha deve ter no mínimo 6 caracteres");
       setLoading(false);
       return;
     }
@@ -118,7 +121,7 @@ export default function CreateAccountPage() {
           <p className="text-3xl font-black leading-tight sm:text-4xl">Bem-Vindo a</p>
           <p className="mt-2 text-5xl font-black leading-none text-[#f0442b] sm:text-6xl">Rentu!!</p>
           <p className="mt-5 text-base leading-7 text-gray-600 sm:mt-6 sm:text-lg">
-            Crie sua conta e comece a gerenciar imÃ³veis ou encontrar o imÃ³vel
+            Crie sua conta e comece a gerenciar imóveis ou encontrar o imóvel
             dos seus sonhos.
           </p>
         </div>
@@ -129,7 +132,7 @@ export default function CreateAccountPage() {
         >
           <h1 className="mb-2 text-center text-2xl font-black sm:text-3xl">Criar Conta</h1>
           <p className="mb-5 text-center text-sm text-gray-500 sm:mb-6">
-            Junte-se Ã  comunidade Rentu
+            Junte-se à comunidade Rentu
           </p>
 
           {error && (
@@ -166,28 +169,48 @@ export default function CreateAccountPage() {
 
           <label className="mb-4 block">
             <span className="mb-2 block font-bold">Senha</span>
-            <input
-              type="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="h-12 w-full min-w-0 rounded border px-4 outline-[#f0442b]"
-              placeholder="MÃ­nimo 6 caracteres"
-              required
-            />
+            <div className="flex h-12 overflow-hidden rounded border focus-within:outline focus-within:outline-2 focus-within:outline-[#f0442b]">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="min-w-0 flex-1 px-4 outline-none"
+                placeholder="Mínimo 6 caracteres"
+                required
+              />
+              <button
+                aria-label={showPassword ? "Ocultar senha" : "Mostrar senha"}
+                className="grid w-14 shrink-0 place-items-center text-2xl text-[#111] transition-colors hover:bg-[#f7f7f7]"
+                onClick={() => setShowPassword((value) => !value)}
+                type="button"
+              >
+                {showPassword ? <FiEyeOff aria-hidden /> : <FiEye aria-hidden />}
+              </button>
+            </div>
           </label>
 
           <label className="mb-4 block">
             <span className="mb-2 block font-bold">Confirmar Senha</span>
-            <input
-              type="password"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="h-12 w-full min-w-0 rounded border px-4 outline-[#f0442b]"
-              placeholder="Confirme sua senha"
-              required
-            />
+            <div className="flex h-12 overflow-hidden rounded border focus-within:outline focus-within:outline-2 focus-within:outline-[#f0442b]">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                className="min-w-0 flex-1 px-4 outline-none"
+                placeholder="Confirme sua senha"
+                required
+              />
+              <button
+                aria-label={showConfirmPassword ? "Ocultar confirmação de senha" : "Mostrar confirmação de senha"}
+                className="grid w-14 shrink-0 place-items-center text-2xl text-[#111] transition-colors hover:bg-[#f7f7f7]"
+                onClick={() => setShowConfirmPassword((value) => !value)}
+                type="button"
+              >
+                {showConfirmPassword ? <FiEyeOff aria-hidden /> : <FiEye aria-hidden />}
+              </button>
+            </div>
           </label>
 
           <label className="mb-6 block">
@@ -198,16 +221,16 @@ export default function CreateAccountPage() {
               onChange={handleChange}
               className="h-12 w-full min-w-0 rounded border px-4 outline-[#f0442b]"
             >
-              <option value="OWNER">ProprietÃ¡rio (Vender/Alugar)</option>
-              <option value="CLIENT">Cliente (Procurar ImÃ³vel)</option>
-              <option value="AGENT">Agente (IntermediÃ¡rio)</option>
+              <option value="OWNER">Proprietário (Vender/Alugar)</option>
+              <option value="CLIENT">Cliente (Procurar Imóvel)</option>
+              <option value="AGENT">Agente (Intermediário)</option>
               
             </select>
           </label>
 
           <label className="mb-6 flex items-start gap-3 text-sm font-bold sm:items-center sm:text-base">
             <input className="mt-1 sm:mt-0" type="checkbox" required />
-            <span>Concordo com os Termos e CondiÃ§Ãµes</span>
+            <span>Concordo com os Termos e Condições</span>
           </label>
 
           <button
@@ -219,7 +242,7 @@ export default function CreateAccountPage() {
           </button>
 
           <p className="mt-4 text-center text-sm text-gray-600">
-            JÃ¡ tem conta?{" "}
+            Já tem conta?{" "}
             <Link href="/login" className="font-bold text-[#f0442b] hover:underline">
               Entrar
             </Link>
